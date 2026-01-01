@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Suspense, lazy } from "react";
 
 import Sidebar from "@/components/layout/sidebar";
 import TopBar from "@/components/layout/topbar";
@@ -7,6 +8,15 @@ import ReportsActivity from "@/components/widget/reports-activity";
 import RecentReports from "@/components/widget/recent-reports";
 import RecentActivity from "@/components/widget/recent-activity";
 import PageHeader from "@/components/ui/page-header";
+import {
+  TableSkeleton,
+  MapSkeleton,
+  ChartSkeleton,
+} from "@/components/widget/widget-suspense";
+
+const RankingInstansi = lazy(() => import("@/components/widget/ranking-instansi"));
+const HeatmapMasalahKota = lazy(() => import("@/components/widget/heatmap-masalah-kota"));
+const EskalasiPenolakan = lazy(() => import("@/components/widget/eskalasi-penolakan"));
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -23,6 +33,21 @@ function RouteComponent() {
           <PageHeader title="Dashboard" />
           <StatsOverview />
 
+          <Suspense fallback={<TableSkeleton rows={5} />}>
+            <RankingInstansi />
+          </Suspense>
+
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div className="lg:col-span-2">
+              <Suspense fallback={<MapSkeleton />}>
+                <HeatmapMasalahKota />
+              </Suspense>
+            </div>
+            <Suspense fallback={<ChartSkeleton />}>
+              <EskalasiPenolakan />
+            </Suspense>
+          </div>
+
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2 space-y-8">
               <ReportsActivity />
@@ -36,3 +61,4 @@ function RouteComponent() {
     </div>
   );
 }
+
