@@ -5,6 +5,9 @@ import type {
   HeatmapCluster,
   EscalationStats,
   EscalationTrend,
+  SLAComplianceData,
+  MTTRByTypeData,
+  ReportTypeDistributionData
 } from "@/components/widget/types";
 
 // ============================================
@@ -40,7 +43,20 @@ export interface EscalationResponse {
   trends: EscalationTrend[];
   updatedAt: string;
 }
+export interface SLAComplianceResponse {
+  data: SLAComplianceData[];
+  updatedAt: string;
+}
 
+export interface MTTRByTypeResponse {
+  data: MTTRByTypeData[];
+  updatedAt: string;
+}
+
+export interface ReportTypeDistributionResponse {
+  data: ReportTypeDistributionData[];
+  updatedAt: string;
+}
 // ============================================
 // Query Parameters
 // ============================================
@@ -97,6 +113,36 @@ export async function fetchEskalasiPenolakan(params: DateRangeParams = {}): Prom
  */
 export async function fetchDashboardStats() {
   const response = await analyticsApi.get("/analytics/overview");
+  return response.data;
+}
+
+/**
+ * Fetch SLA compliance data
+ * GET /api/analytics/sla-compliance
+ */
+export async function fetchSLACompliance(params: DateRangeParams = {}): Promise<SLAComplianceResponse> {
+  const query = buildQueryString(params);
+  const response = await analyticsApi.get<SLAComplianceResponse>(`/analytics/sla-compliance${query}`);
+  return response.data;
+}
+
+/**
+ * Fetch MTTR by type data
+ * GET /api/analytics/mttr-by-type
+ */
+export async function fetchMTTRByType(params: DateRangeParams = {}): Promise<MTTRByTypeResponse> {
+  const query = buildQueryString(params);
+  const response = await analyticsApi.get<MTTRByTypeResponse>(`/analytics/mttr-by-type${query}`);
+  return response.data;
+}
+
+/**
+ * Fetch report type distribution data
+ * GET /api/analytics/report-type-distribution
+ */
+export async function fetchReportTypeDistribution(params: DateRangeParams = {}): Promise<ReportTypeDistributionResponse> {
+  const query = buildQueryString(params);
+  const response = await analyticsApi.get<ReportTypeDistributionResponse>(`/analytics/report-type-distribution${query}`);
   return response.data;
 }
 

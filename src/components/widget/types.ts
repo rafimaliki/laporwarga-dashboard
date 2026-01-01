@@ -85,3 +85,28 @@ export interface WidgetHeaderProps {
   subtitle?: string;
   action?: React.ReactNode;
 }
+
+export interface SLAComplianceData {
+  agency: string;
+  totalAssignedReports: number;
+  slaBreachedCount: number;
+  slaComplianceRate: number;
+}
+
+export interface MTTRByTypeData {
+  reportType: string;
+  avgResolutionHours: number | null;
+  resolvedCount: number;
+  totalCount: number;
+}
+
+export interface ReportTypeDistributionData {
+  reportType: string;
+  submitted: number;
+  verified: number;
+  inProgress: number;
+  resolved: number;
+  rejected: number;
+  escalated: number;
+  total: number;
+}

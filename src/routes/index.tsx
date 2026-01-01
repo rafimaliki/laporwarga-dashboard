@@ -7,6 +7,9 @@ import StatsOverview from "@/components/widget/stats-overview";
 import ReportsActivity from "@/components/widget/reports-activity";
 import RecentReports from "@/components/widget/recent-reports";
 import RecentActivity from "@/components/widget/recent-activity";
+import SLACompliance from "@/components/widget/sla-compliance";
+import MTTRByType from "@/components/widget/mean-time-to-resolution";
+import ReportTypeDistribution from "@/components/widget/report-type-distribution";
 import PageHeader from "@/components/ui/page-header";
 import {
   TableSkeleton,
@@ -48,6 +51,20 @@ function RouteComponent() {
             </Suspense>
           </div>
 
+          {/* New Analytics Widgets */}
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <Suspense fallback={<ChartSkeleton />}>
+              <SLACompliance />
+            </Suspense>
+            <Suspense fallback={<ChartSkeleton />}>
+              <MTTRByType />
+            </Suspense>
+          </div>
+
+          <Suspense fallback={<ChartSkeleton />}>
+            <ReportTypeDistribution />
+          </Suspense>
+
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             <div className="lg:col-span-2 space-y-8">
               <ReportsActivity />
@@ -61,4 +78,3 @@ function RouteComponent() {
     </div>
   );
 }
-
