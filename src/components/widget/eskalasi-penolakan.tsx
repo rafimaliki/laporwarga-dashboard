@@ -11,6 +11,7 @@ import {
   Legend,
 } from "recharts";
 import type { EscalationStats, EscalationTrend, WidgetProps } from "./types";
+import { fetchEskalasiPenolakan } from "@/api/analytics.api";
 
 // ============================================
 // Data Fetching
@@ -22,32 +23,8 @@ interface EscalationData {
 }
 
 const fetchEscalationData = async (): Promise<EscalationData> => {
-  // TODO: Replace with actual API call
-  // const response = await fetch(`${API_URL}/api/reports/escalation`);
-  // return response.json();
-
-  // Simulated delay for demo
-  await new Promise((resolve) => setTimeout(resolve, 900));
-
-  return {
-    stats: {
-      totalEscalated: 156,
-      totalRejected: 89,
-      escalationRate: 12.4,
-      rejectionRate: 7.1,
-      totalReports: 1258,
-    },
-    trends: [
-      { period: "Jan", escalated: 12, rejected: 8, resolved: 85 },
-      { period: "Feb", escalated: 18, rejected: 12, resolved: 92 },
-      { period: "Mar", escalated: 15, rejected: 9, resolved: 88 },
-      { period: "Apr", escalated: 22, rejected: 14, resolved: 95 },
-      { period: "Mei", escalated: 19, rejected: 11, resolved: 102 },
-      { period: "Jun", escalated: 25, rejected: 15, resolved: 98 },
-      { period: "Jul", escalated: 21, rejected: 10, resolved: 110 },
-      { period: "Agu", escalated: 24, rejected: 10, resolved: 115 },
-    ],
-  };
+  const response = await fetchEskalasiPenolakan();
+  return { stats: response.stats, trends: response.trends };
 };
 
 // Cache the promise for Suspense

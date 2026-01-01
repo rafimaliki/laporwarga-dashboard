@@ -1,28 +1,15 @@
 import { Trophy, TrendingUp, TrendingDown, Clock, AlertTriangle } from "lucide-react";
 import { use } from "react";
 import type { RankingData, WidgetProps } from "./types";
+import { fetchRankingInstansi } from "@/api/analytics.api";
 
 // ============================================
 // Data Fetching
 // ============================================
 
 const fetchRankingData = async (): Promise<RankingData[]> => {
-  // TODO: Replace with actual API call
-  // const response = await fetch(`${API_URL}/api/analytics/ranking`);
-  // return response.json();
-  
-  // Simulated delay for demo
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  
-  return [
-    { rank: 1, agencyName: "Dinas Pekerjaan Umum", slaBreachedCount: 2, avgResolutionTimeHours: 18.5, totalReports: 156, score: 94 },
-    { rank: 2, agencyName: "Dinas Perhubungan", slaBreachedCount: 5, avgResolutionTimeHours: 24.2, totalReports: 142, score: 88 },
-    { rank: 3, agencyName: "Dinas Lingkungan Hidup", slaBreachedCount: 8, avgResolutionTimeHours: 32.1, totalReports: 128, score: 82 },
-    { rank: 4, agencyName: "Dinas Kesehatan", slaBreachedCount: 3, avgResolutionTimeHours: 20.5, totalReports: 95, score: 79 },
-    { rank: 5, agencyName: "Dinas Sosial", slaBreachedCount: 12, avgResolutionTimeHours: 48.3, totalReports: 87, score: 71 },
-    { rank: 6, agencyName: "Dinas Pendidikan", slaBreachedCount: 15, avgResolutionTimeHours: 52.0, totalReports: 76, score: 65 },
-    { rank: 7, agencyName: "Satpol PP", slaBreachedCount: 18, avgResolutionTimeHours: 56.8, totalReports: 68, score: 58 },
-  ];
+  const response = await fetchRankingInstansi();
+  return response.data;
 };
 
 // Cache the promise for Suspense

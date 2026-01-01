@@ -2,6 +2,7 @@ import { MapPin, Filter, Layers } from "lucide-react";
 import { use, useState, useMemo } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import type { HeatmapPoint, HeatmapCluster, WidgetProps } from "./types";
+import { fetchHeatmapMasalahKota } from "@/api/analytics.api";
 import "leaflet/dist/leaflet.css";
 
 
@@ -11,41 +12,7 @@ interface HeatmapData {
 }
 
 const fetchHeatmapData = async (): Promise<HeatmapData> => {
-  // TODO: Replace with actual API call
-  // const response = await fetch(`${API_URL}/api/reports/heatmap`);
-  // return response.json();
-
-  // Simulated delay for demo
-  await new Promise((resolve) => setTimeout(resolve, 1200));
-
-  // Mock data for Jakarta area
-  const types = ["Infrastruktur", "Kebersihan", "Keamanan", "Pelayanan Publik", "Lainnya"];
-  
-  const points: HeatmapPoint[] = [
-    { id: "1", latitude: -6.2088, longitude: 106.8456, type: "Infrastruktur", intensity: 0.9 },
-    { id: "2", latitude: -6.1751, longitude: 106.8650, type: "Kebersihan", intensity: 0.7 },
-    { id: "3", latitude: -6.2297, longitude: 106.6894, type: "Keamanan", intensity: 0.5 },
-    { id: "4", latitude: -6.1862, longitude: 106.8345, type: "Pelayanan Publik", intensity: 0.8 },
-    { id: "5", latitude: -6.2615, longitude: 106.8106, type: "Infrastruktur", intensity: 0.6 },
-    { id: "6", latitude: -6.1544, longitude: 106.8317, type: "Kebersihan", intensity: 0.9 },
-    { id: "7", latitude: -6.2383, longitude: 106.9756, type: "Lainnya", intensity: 0.4 },
-    { id: "8", latitude: -6.1352, longitude: 106.8133, type: "Infrastruktur", intensity: 0.7 },
-    { id: "9", latitude: -6.2046, longitude: 106.8225, type: "Keamanan", intensity: 0.8 },
-    { id: "10", latitude: -6.2194, longitude: 106.7509, type: "Kebersihan", intensity: 0.5 },
-    { id: "11", latitude: -6.1687, longitude: 106.7893, type: "Pelayanan Publik", intensity: 0.6 },
-    { id: "12", latitude: -6.2456, longitude: 106.8801, type: "Infrastruktur", intensity: 0.9 },
-    { id: "13", latitude: -6.1923, longitude: 106.9012, type: "Lainnya", intensity: 0.3 },
-    { id: "14", latitude: -6.2789, longitude: 106.7234, type: "Keamanan", intensity: 0.7 },
-    { id: "15", latitude: -6.1456, longitude: 106.8567, type: "Kebersihan", intensity: 0.8 },
-  ];
-
-  const clusters: HeatmapCluster[] = [
-    { latitude: -6.2088, longitude: 106.8456, count: 45, types: { Infrastruktur: 20, Kebersihan: 15, Keamanan: 10 } },
-    { latitude: -6.1751, longitude: 106.8650, count: 32, types: { Kebersihan: 18, "Pelayanan Publik": 14 } },
-    { latitude: -6.2297, longitude: 106.6894, count: 28, types: { Keamanan: 15, Lainnya: 13 } },
-  ];
-
-  return { points, clusters };
+  return await fetchHeatmapMasalahKota();
 };
 
 // Cache the promise for Suspense
