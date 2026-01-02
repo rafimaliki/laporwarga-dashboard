@@ -112,6 +112,7 @@ export default function StatsOverview({
         label="Total Laporan"
         value={overviewData.current.totalReports}
         previousValue={overviewData.previous?.totalReports}
+        timeFrame={dateRangeType}
         icon={FileText}
         iconColor="text-blue-600"
         iconBgColor="bg-blue-50"
@@ -120,6 +121,7 @@ export default function StatsOverview({
         label="Menunggu Diproses"
         value={overviewData.current.pendingReports}
         previousValue={overviewData.previous?.pendingReports}
+        timeFrame={dateRangeType}
         icon={Clock}
         iconColor="text-orange-600"
         iconBgColor="bg-orange-50"
@@ -128,6 +130,7 @@ export default function StatsOverview({
         label="Terselesaikan"
         value={overviewData.current.resolvedReports}
         previousValue={overviewData.previous?.resolvedReports}
+        timeFrame={dateRangeType}
         icon={CheckCircle}
         iconColor="text-green-600"
         iconBgColor="bg-green-50"
@@ -136,6 +139,7 @@ export default function StatsOverview({
         label="Pengguna Aktif"
         value={overviewData.current.totalUsers}
         previousValue={overviewData.previous?.totalUsers}
+        timeFrame={dateRangeType}
         icon={Users}
         iconColor="text-purple-600"
         iconBgColor="bg-purple-50"
@@ -148,6 +152,7 @@ function StatCard({
   label,
   value,
   previousValue,
+  timeFrame,
   icon: Icon = Clock,
   iconColor = "text-sky-500",
   iconBgColor = "bg-sky-50",
@@ -155,6 +160,7 @@ function StatCard({
   label: string;
   value?: number;
   previousValue?: number;
+  timeFrame?: string;
   icon?: React.ComponentType<{ size?: number; className?: string }>;
   iconColor?: string;
   iconBgColor?: string;
@@ -169,6 +175,20 @@ function StatCard({
   const isPositive = change !== null && change > 0;
   const isNegative = change !== null && change < 0;
 
+  const mapTimeFrameToLabel = (timeFrame?: string) => {
+    switch (timeFrame) {
+      case "day":
+        return "kemarin";
+      case "week":
+        return "minggu lalu";
+      case "month":
+        return "bulan lalu";
+      case "year":
+        return "tahun lalu";
+      default:
+        return "periode sebelumnya";
+    }
+  };
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:shadow-md">
       <div className="mb-4 flex items-center justify-between">
@@ -203,7 +223,9 @@ function StatCard({
             {isPositive && "+"}
             {change.toFixed(1)}%
           </span>
-          <span className="text-xs text-slate-400">vs minggu lalu</span>
+          <span className="text-xs text-slate-400">
+            vs {mapTimeFrameToLabel(timeFrame)}
+          </span>
         </div>
       )}
     </div>
