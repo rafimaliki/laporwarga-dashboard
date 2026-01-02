@@ -182,12 +182,27 @@ export async function fetchReportTypeDistribution(
   return response.data;
 }
 
+/**
+ * Fetch overview data
+ * GET /api/analytics/overview
+ */
 export async function fetchOverview(
   params: DateRangeParams = {}
 ): Promise<OverviewResponse> {
   const query = buildQueryString(params);
-  console.log("Fetching overview with query:", query);
   const response = await analyticsApi.get(`/analytics/overview${query}`);
+  return response.data;
+}
+
+/**
+ * Fetch overview data
+ * GET /api/analytics/recent-reports?limit=5
+ */
+
+export async function fetchRecentReports(limit: number = 5): Promise<any[]> {
+  const response = await analyticsApi.get(
+    `/analytics/recent-reports?limit=${limit}`
+  );
   return response.data;
 }
 

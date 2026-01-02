@@ -1,6 +1,5 @@
 import { Suspense, type ReactNode } from "react";
 
-
 interface WidgetSkeletonProps {
   height?: string;
   showHeader?: boolean;
@@ -42,10 +41,7 @@ export function TableSkeleton({ rows = 5 }: { rows?: number }) {
         {/* Table Header */}
         <div className="grid grid-cols-5 gap-4 pb-3 border-b border-slate-100">
           {Array.from({ length: 5 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-4 rounded bg-slate-100 animate-pulse"
-            />
+            <div key={i} className="h-4 rounded bg-slate-100 animate-pulse" />
           ))}
         </div>
         {/* Table Rows */}
@@ -55,10 +51,7 @@ export function TableSkeleton({ rows = 5 }: { rows?: number }) {
             className="grid grid-cols-5 gap-4 py-3 border-b border-slate-50"
           >
             {Array.from({ length: 5 }).map((_, j) => (
-              <div
-                key={j}
-                className="h-4 rounded bg-slate-50 animate-pulse"
-              />
+              <div key={j} className="h-4 rounded bg-slate-50 animate-pulse" />
             ))}
           </div>
         ))}
@@ -108,10 +101,7 @@ export function ChartSkeleton() {
       {/* Stats Cards */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         {Array.from({ length: 3 }).map((_, i) => (
-          <div
-            key={i}
-            className="p-4 rounded-xl bg-slate-50 animate-pulse"
-          >
+          <div key={i} className="p-4 rounded-xl bg-slate-50 animate-pulse">
             <div className="h-4 w-20 rounded bg-slate-100 mb-2" />
             <div className="h-8 w-16 rounded bg-slate-100" />
           </div>
@@ -123,6 +113,24 @@ export function ChartSkeleton() {
   );
 }
 
+export function ListSkeleton({ items = 5 }: { items?: number }) {
+  return (
+    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
+        <div className="h-6 w-40 rounded-lg bg-slate-100 animate-pulse" />
+        <div className="h-8 w-24 rounded-lg bg-slate-100 animate-pulse" />
+      </div>
+      <div className="space-y-4">
+        {Array.from({ length: items }).map((_, i) => (
+          <div
+            key={i}
+            className="h-10 w-full rounded-lg bg-slate-50 animate-pulse"
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
 
 interface WidgetSuspenseProps {
   children: ReactNode;
