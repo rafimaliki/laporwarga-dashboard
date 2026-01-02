@@ -90,12 +90,12 @@ export default function ReportTypeDistribution() {
     total: item.total,
   }));
   const statusColors = {
-    Terkirim: "#22c55e",
-    Terverifikasi: "#31694E",
-    "Sedang Diproses": "#f59e0b",
-    Terselesaikan: "#B2C6D5",
-    Ditolak: "#E55050",
-    Dieskalasi: "#547792",
+    Ditolak: "#e24b26",
+    Terselesaikan: "#a6b3b3",
+    Dieskalasi: "#ffdb69",
+    "Sedang Diproses": "#f18226",
+    Terverifikasi: "#3b8ad9",
+    Terkirim: "#7bc0f7",
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
