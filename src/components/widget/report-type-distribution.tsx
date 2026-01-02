@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
-import { fetchReportTypeDistribution, type ReportTypeDistributionResponse } from "@/api/analytics.api";
+import {
+  fetchReportTypeDistribution,
+  type ReportTypeDistributionResponse,
+} from "@/api/analytics.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { PieChart } from "lucide-react";
 
 export default function ReportTypeDistribution() {
@@ -59,7 +71,9 @@ export default function ReportTypeDistribution() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-slate-500">Failed to load distribution data</p>
+          <p className="text-sm text-slate-500">
+            Failed to load distribution data
+          </p>
         </CardContent>
       </Card>
     );
@@ -87,14 +101,22 @@ export default function ReportTypeDistribution() {
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
-      const total = payload.reduce((sum: number, entry: any) => sum + entry.value, 0);
+      const total = payload.reduce(
+        (sum: number, entry: any) => sum + entry.value,
+        0
+      );
       return (
         <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3">
-          <p className="font-semibold text-slate-900 capitalize mb-2">{label}</p>
+          <p className="font-semibold text-slate-900 capitalize mb-2">
+            {label}
+          </p>
           <p className="text-xs text-slate-500 mb-2">Total: {total} laporan</p>
           <div className="space-y-1">
             {payload.map((entry: any) => (
-              <div key={entry.name} className="flex items-center justify-between gap-4">
+              <div
+                key={entry.name}
+                className="flex items-center justify-between gap-4"
+              >
                 <div className="flex items-center gap-2">
                   <div
                     className="w-3 h-3 rounded"
@@ -102,7 +124,9 @@ export default function ReportTypeDistribution() {
                   ></div>
                   <span className="text-xs text-slate-600">{entry.name}</span>
                 </div>
-                <span className="text-xs font-semibold text-slate-900">{entry.value}</span>
+                <span className="text-xs font-semibold text-slate-900">
+                  {entry.value}
+                </span>
               </div>
             ))}
           </div>
@@ -127,12 +151,17 @@ export default function ReportTypeDistribution() {
         {chartData.length > 0 ? (
           <>
             <ResponsiveContainer width="100%" height={320}>
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+              <BarChart
+                data={chartData}
+                margin={{ top: 10, right: 10, left: 0, bottom: 20 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis
                   dataKey="type"
                   tick={{ fill: "#64748b", fontSize: 12 }}
-                  tickFormatter={(value) => value.charAt(0).toUpperCase() + value.slice(1)}
+                  tickFormatter={(value) =>
+                    value.charAt(0).toUpperCase() + value.slice(1)
+                  }
                 />
                 <YAxis tick={{ fill: "#64748b", fontSize: 12 }} />
                 <Tooltip content={<CustomTooltip />} />
@@ -140,19 +169,54 @@ export default function ReportTypeDistribution() {
                   wrapperStyle={{ fontSize: "11px", paddingTop: "10px" }}
                   iconType="circle"
                 />
-                <Bar dataKey="Submitted" stackId="a" fill={statusColors.Submitted} radius={[0, 0, 0, 0]} />
-                <Bar dataKey="Verified" stackId="a" fill={statusColors.Verified} radius={[0, 0, 0, 0]} />
-                <Bar dataKey="In Progress" stackId="a" fill={statusColors["In Progress"]} radius={[0, 0, 0, 0]} />
-                <Bar dataKey="Resolved" stackId="a" fill={statusColors.Resolved} radius={[0, 0, 0, 0]} />
-                <Bar dataKey="Rejected" stackId="a" fill={statusColors.Rejected} radius={[0, 0, 0, 0]} />
-                <Bar dataKey="Escalated" stackId="a" fill={statusColors.Escalated} radius={[4, 4, 0, 0]} />
+                <Bar
+                  dataKey="Submitted"
+                  stackId="a"
+                  fill={statusColors.Submitted}
+                  radius={[0, 0, 0, 0]}
+                />
+                <Bar
+                  dataKey="Verified"
+                  stackId="a"
+                  fill={statusColors.Verified}
+                  radius={[0, 0, 0, 0]}
+                />
+                <Bar
+                  dataKey="In Progress"
+                  stackId="a"
+                  fill={statusColors["In Progress"]}
+                  radius={[0, 0, 0, 0]}
+                />
+                <Bar
+                  dataKey="Resolved"
+                  stackId="a"
+                  fill={statusColors.Resolved}
+                  radius={[0, 0, 0, 0]}
+                />
+                <Bar
+                  dataKey="Rejected"
+                  stackId="a"
+                  fill={statusColors.Rejected}
+                  radius={[0, 0, 0, 0]}
+                />
+                <Bar
+                  dataKey="Escalated"
+                  stackId="a"
+                  fill={statusColors.Escalated}
+                  radius={[4, 4, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
 
             <div className="mt-6 grid grid-cols-2 gap-4 text-xs">
               {chartData.map((item) => (
-                <div key={item.type} className="flex items-center justify-between p-2 bg-slate-50 rounded">
-                  <span className="font-medium capitalize text-slate-700">{item.type}</span>
+                <div
+                  key={item.type}
+                  className="flex items-center justify-between p-2 bg-slate-50 rounded"
+                >
+                  <span className="font-medium capitalize text-slate-700">
+                    {item.type}
+                  </span>
                   <span className="text-slate-600">{item.total} total</span>
                 </div>
               ))}

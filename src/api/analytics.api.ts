@@ -7,14 +7,15 @@ import type {
   EscalationTrend,
   SLAComplianceData,
   MTTRByTypeData,
-  ReportTypeDistributionData
+  ReportTypeDistributionData,
 } from "@/components/widget/types";
 
 // ============================================
 // API Configuration
 // ============================================
 
-const ANALYTICS_SERVICE_URL = import.meta.env.VITE_ANALYTICS_SERVICE_URL || "http://localhost:5000/api";
+const ANALYTICS_SERVICE_URL =
+  import.meta.env.VITE_ANALYTICS_SERVICE_URL || "http://localhost:5000/api";
 
 const analyticsApi = axios.create({
   baseURL: ANALYTICS_SERVICE_URL,
@@ -57,6 +58,17 @@ export interface ReportTypeDistributionResponse {
   data: ReportTypeDistributionData[];
   updatedAt: string;
 }
+
+export interface OverviewResponse {
+  totalReports: number;
+  pendingReports: number;
+  resolvedReports: number;
+  escalatedReports: number;
+  rejectedReports: number;
+  totalUsers: number;
+  updatedAt: string;
+}
+
 // ============================================
 // Query Parameters
 // ============================================
@@ -82,9 +94,13 @@ function buildQueryString(params: DateRangeParams): string {
  * Fetch agency ranking data
  * GET /api/analytics/ranking
  */
-export async function fetchRankingInstansi(params: DateRangeParams = {}): Promise<RankingResponse> {
+export async function fetchRankingInstansi(
+  params: DateRangeParams = {}
+): Promise<RankingResponse> {
   const query = buildQueryString(params);
-  const response = await analyticsApi.get<RankingResponse>(`/analytics/ranking${query}`);
+  const response = await analyticsApi.get<RankingResponse>(
+    `/analytics/ranking${query}`
+  );
   return response.data;
 }
 
@@ -92,9 +108,13 @@ export async function fetchRankingInstansi(params: DateRangeParams = {}): Promis
  * Fetch heatmap data for city problem areas
  * GET /api/analytics/heatmap
  */
-export async function fetchHeatmapMasalahKota(params: DateRangeParams = {}): Promise<HeatmapResponse> {
+export async function fetchHeatmapMasalahKota(
+  params: DateRangeParams = {}
+): Promise<HeatmapResponse> {
   const query = buildQueryString(params);
-  const response = await analyticsApi.get<HeatmapResponse>(`/analytics/heatmap${query}`);
+  const response = await analyticsApi.get<HeatmapResponse>(
+    `/analytics/heatmap${query}`
+  );
   return response.data;
 }
 
@@ -102,9 +122,13 @@ export async function fetchHeatmapMasalahKota(params: DateRangeParams = {}): Pro
  * Fetch escalation and rejection statistics
  * GET /api/analytics/escalation
  */
-export async function fetchEskalasiPenolakan(params: DateRangeParams = {}): Promise<EscalationResponse> {
+export async function fetchEskalasiPenolakan(
+  params: DateRangeParams = {}
+): Promise<EscalationResponse> {
   const query = buildQueryString(params);
-  const response = await analyticsApi.get<EscalationResponse>(`/analytics/escalation${query}`);
+  const response = await analyticsApi.get<EscalationResponse>(
+    `/analytics/escalation${query}`
+  );
   return response.data;
 }
 
@@ -120,9 +144,13 @@ export async function fetchDashboardStats() {
  * Fetch SLA compliance data
  * GET /api/analytics/sla-compliance
  */
-export async function fetchSLACompliance(params: DateRangeParams = {}): Promise<SLAComplianceResponse> {
+export async function fetchSLACompliance(
+  params: DateRangeParams = {}
+): Promise<SLAComplianceResponse> {
   const query = buildQueryString(params);
-  const response = await analyticsApi.get<SLAComplianceResponse>(`/analytics/sla-compliance${query}`);
+  const response = await analyticsApi.get<SLAComplianceResponse>(
+    `/analytics/sla-compliance${query}`
+  );
   return response.data;
 }
 
@@ -130,9 +158,13 @@ export async function fetchSLACompliance(params: DateRangeParams = {}): Promise<
  * Fetch MTTR by type data
  * GET /api/analytics/mttr-by-type
  */
-export async function fetchMTTRByType(params: DateRangeParams = {}): Promise<MTTRByTypeResponse> {
+export async function fetchMTTRByType(
+  params: DateRangeParams = {}
+): Promise<MTTRByTypeResponse> {
   const query = buildQueryString(params);
-  const response = await analyticsApi.get<MTTRByTypeResponse>(`/analytics/mttr-by-type${query}`);
+  const response = await analyticsApi.get<MTTRByTypeResponse>(
+    `/analytics/mttr-by-type${query}`
+  );
   return response.data;
 }
 
@@ -140,9 +172,22 @@ export async function fetchMTTRByType(params: DateRangeParams = {}): Promise<MTT
  * Fetch report type distribution data
  * GET /api/analytics/report-type-distribution
  */
-export async function fetchReportTypeDistribution(params: DateRangeParams = {}): Promise<ReportTypeDistributionResponse> {
+export async function fetchReportTypeDistribution(
+  params: DateRangeParams = {}
+): Promise<ReportTypeDistributionResponse> {
   const query = buildQueryString(params);
-  const response = await analyticsApi.get<ReportTypeDistributionResponse>(`/analytics/report-type-distribution${query}`);
+  const response = await analyticsApi.get<ReportTypeDistributionResponse>(
+    `/analytics/report-type-distribution${query}`
+  );
+  return response.data;
+}
+
+export async function fetchOverview(
+  params: DateRangeParams = {}
+): Promise<OverviewResponse> {
+  const query = buildQueryString(params);
+  console.log("Fetching overview with query:", query);
+  const response = await analyticsApi.get(`/analytics/overview${query}`);
   return response.data;
 }
 

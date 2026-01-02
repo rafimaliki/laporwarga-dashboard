@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState, useMemo } from "react";
 
 import Sidebar from "@/components/layout/sidebar";
 import TopBar from "@/components/layout/topbar";
@@ -11,21 +11,41 @@ import SLACompliance from "@/components/widget/sla-compliance";
 import MTTRByType from "@/components/widget/mean-time-to-resolution";
 import ReportTypeDistribution from "@/components/widget/report-type-distribution";
 import PageHeader from "@/components/ui/page-header";
+import DateRangeToggle from "@/components/ui/date-range-toggle";
+import { getDateRange, type DateRangeType } from "@/lib/utils";
 import {
   TableSkeleton,
   MapSkeleton,
   ChartSkeleton,
 } from "@/components/widget/widget-suspense";
 
-const RankingInstansi = lazy(() => import("@/components/widget/ranking-instansi"));
-const HeatmapMasalahKota = lazy(() => import("@/components/widget/heatmap-masalah-kota"));
-const EskalasiPenolakan = lazy(() => import("@/components/widget/eskalasi-penolakan"));
+const RankingInstansi = lazy(
+  () => import("@/components/widget/ranking-instansi")
+);
+const HeatmapMasalahKota = lazy(
+  () => import("@/components/widget/heatmap-masalah-kota")
+);
+const EskalasiPenolakan = lazy(
+  () => import("@/components/widget/eskalasi-penolakan")
+);
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [dateRangeType, setDateRangeType] = useState<DateRangeType>("all");
+
+  const dateRange = useMemo(() => {
+    const current = getDateRange(dateRangeType, 0);
+    const previous = getDateRange(dateRangeType, -1);
+
+    return {
+      current,
+      previous,
+    };
+  }, [dateRangeType]);
+
   return (
     <div className="flex min-h-screen bg-slate-50 font-sans text-slate-900">
       <Sidebar />
@@ -33,8 +53,16 @@ function RouteComponent() {
         <TopBar />
 
         <div className="p-6 lg:p-10 max-w-7xl mx-auto space-y-8">
-          <PageHeader title="Dashboard" />
-          <StatsOverview />
+          <PageHeader
+            title="Dashboard"
+            action={
+              <DateRangeToggle
+                dateRangeType={dateRangeType}
+                onChange={setDateRangeType}
+              />
+            }
+          />
+          <StatsOverview dateRangeType={dateRangeType} dateRange={dateRange} />
 
           <Suspense fallback={<TableSkeleton rows={5} />}>
             <RankingInstansi />
