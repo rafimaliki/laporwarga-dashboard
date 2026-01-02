@@ -3,7 +3,6 @@ import { Suspense, lazy, useState, useMemo } from "react";
 
 import Sidebar from "@/components/layout/sidebar";
 import TopBar from "@/components/layout/topbar";
-import StatsOverview from "@/components/widget/stats-overview";
 import SLACompliance from "@/components/widget/sla-compliance";
 import MTTRByType from "@/components/widget/mean-time-to-resolution";
 import ReportTypeDistribution from "@/components/widget/report-type-distribution";
@@ -15,8 +14,12 @@ import {
   MapSkeleton,
   ChartSkeleton,
   ListSkeleton,
+  StatsSkeleton,
 } from "@/components/widget/widget-suspense";
 
+const StatsOverview = lazy(
+  () => import("@/components/widget/stats-overview")
+);
 const RankingInstansi = lazy(
   () => import("@/components/widget/ranking-instansi")
 );
@@ -63,7 +66,9 @@ function RouteComponent() {
               />
             }
           />
-          <StatsOverview dateRangeType={dateRangeType} dateRange={dateRange} />
+          <Suspense fallback={<StatsSkeleton />}>
+            <StatsOverview dateRangeType={dateRangeType} dateRange={dateRange} />
+          </Suspense>
 
           <Suspense fallback={<TableSkeleton rows={5} />}>
             <RankingInstansi />

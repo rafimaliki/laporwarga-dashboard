@@ -132,6 +132,30 @@ export function ListSkeleton({ items = 5 }: { items?: number }) {
   );
 }
 
+export function StatsSkeleton() {
+  return (
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <div
+          key={i}
+          className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
+        >
+          <div className="mb-4 flex items-center justify-between">
+            <div className="h-4 w-24 rounded bg-slate-100 animate-pulse" />
+            <div className="h-8 w-8 rounded-lg bg-slate-100 animate-pulse" />
+          </div>
+          <div className="h-9 w-20 rounded bg-slate-100 animate-pulse mb-4" />
+          <div className="flex items-center gap-2">
+            <div className="h-4 w-4 rounded bg-slate-100 animate-pulse" />
+            <div className="h-4 w-16 rounded bg-slate-100 animate-pulse" />
+            <div className="h-3 w-20 rounded bg-slate-100 animate-pulse" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 interface WidgetSuspenseProps {
   children: ReactNode;
   fallback?: ReactNode;
