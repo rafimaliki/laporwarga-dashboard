@@ -1,7 +1,16 @@
 import { useState, useEffect } from "react";
 import { fetchMTTRByType, type MTTRByTypeResponse } from "@/api/analytics.api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+} from "recharts";
 import { Timer } from "lucide-react";
 
 export default function MTTRByType() {
@@ -26,9 +35,8 @@ export default function MTTRByType() {
 
     loadData();
 
-    // Auto-refresh every 60 seconds
-    const interval = setInterval(loadData, 60000);
-    return () => clearInterval(interval);
+    // const interval = setInterval(loadData, 60000);
+    // return () => clearInterval(interval);
   }, []);
 
   if (isLoading) {
@@ -67,8 +75,12 @@ export default function MTTRByType() {
 
   const chartData = data.data.map((item) => ({
     type: item.reportType,
-    hours: item.avgResolutionHours ? parseFloat(item.avgResolutionHours.toFixed(1)) : 0,
-    days: item.avgResolutionHours ? parseFloat((item.avgResolutionHours / 24).toFixed(1)) : 0,
+    hours: item.avgResolutionHours
+      ? parseFloat(item.avgResolutionHours.toFixed(1))
+      : 0,
+    days: item.avgResolutionHours
+      ? parseFloat((item.avgResolutionHours / 24).toFixed(1))
+      : 0,
     resolved: item.resolvedCount,
     total: item.totalCount,
   }));
@@ -78,13 +90,13 @@ export default function MTTRByType() {
       const data = payload[0].payload;
       return (
         <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3">
-          <p className="font-semibold text-slate-900 capitalize mb-2">{data.type}</p>
+          <p className="font-semibold text-slate-900 capitalize mb-2">
+            {data.type}
+          </p>
           <p className="text-sm text-slate-600">
             Rata-rata: <span className="font-semibold">{data.hours} jam</span>
           </p>
-          <p className="text-sm text-slate-600">
-            ({data.days} hari)
-          </p>
+          <p className="text-sm text-slate-600">({data.days} hari)</p>
           <p className="text-xs text-slate-500 mt-1">
             {data.resolved} dari {data.total} terselesaikan
           </p>
@@ -96,35 +108,49 @@ export default function MTTRByType() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <Timer className="w-5 h-5 text-purple-600" />
-          Rata-rata Waktu Penyelesaian (MTTR)
-        </CardTitle>
-        <p className="text-sm text-slate-500 mt-1">
-          Mean Time To Resolution berdasarkan jenis laporan
-        </p>
+      <CardHeader className="flex flex-row items-center gap-3">
+        <div className="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+          <Timer size={20} />
+        </div>
+        <div>
+          <h3 className="font-semibold text-slate-800">
+            Rata-rata Waktu Penyelesaian (MTTR)
+          </h3>
+          <p className="text-sm text-slate-500">
+            Mean Time To Resolution berdasarkan jenis laporan
+          </p>
+        </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-2">
         {chartData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={320}>
-            <BarChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+          <ResponsiveContainer width="100%" height={420}>
+            <BarChart
+              data={chartData}
+              margin={{ top: 10, right: 10, left: 0, bottom: 5 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
               <XAxis
                 dataKey="type"
                 tick={{ fill: "#64748b", fontSize: 12 }}
-                tickFormatter={(value) => value.charAt(0).toUpperCase() + value.slice(1)}
+                tickFormatter={(value) =>
+                  value.charAt(0).toUpperCase() + value.slice(1)
+                }
               />
               <YAxis
                 tick={{ fill: "#64748b", fontSize: 12 }}
-                label={{ value: "Jam", angle: -90, position: "insideLeft", fill: "#64748b" }}
+                label={{
+                  value: "Jam",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#64748b",
+                }}
               />
               <Tooltip content={<CustomTooltip />} />
               <Legend
                 wrapperStyle={{ fontSize: "12px", paddingTop: "10px" }}
                 formatter={() => "Waktu Penyelesaian (jam)"}
               />
-              <Bar dataKey="hours" fill="#9333ea" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="hours" fill="#2563eb" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         ) : (

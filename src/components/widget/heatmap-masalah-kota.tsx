@@ -1,10 +1,15 @@
 import { MapPin, Filter, Layers } from "lucide-react";
 import { use, useState, useMemo } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  CircleMarker,
+  Popup,
+  useMap,
+} from "react-leaflet";
 import type { HeatmapPoint, HeatmapCluster, WidgetProps } from "./types";
 import { fetchHeatmapMasalahKota } from "@/api/analytics.api";
 import "leaflet/dist/leaflet.css";
-
 
 interface HeatmapData {
   points: HeatmapPoint[];
@@ -35,11 +40,11 @@ export function resetHeatmapCache() {
 // ============================================
 
 const TYPE_COLORS: Record<string, string> = {
-  Infrastruktur: "#ef4444",
-  Kebersihan: "#22c55e",
-  Keamanan: "#f59e0b",
-  "Pelayanan Publik": "#3b82f6",
-  Lainnya: "#8b5cf6",
+  Infrastruktur: "#fecaca",
+  Kebersihan: "#bbf7d0",
+  Keamanan: "#fde68a",
+  "Pelayanan Publik": "#bfdbfe",
+  Lainnya: "#e9d5ff",
 };
 
 const getTypeColor = (type: string): string => {
@@ -194,7 +199,9 @@ function HeatmapMasalahKotaContent({ dataPromise }: HeatmapMasalahKotaProps) {
             <MapPin size={20} />
           </div>
           <div>
-            <h3 className="font-semibold text-slate-800">Heatmap Masalah Kota</h3>
+            <h3 className="font-semibold text-slate-800">
+              Heatmap Masalah Kota
+            </h3>
             <p className="text-sm text-slate-500">
               Identifikasi wilayah bermasalah
             </p>
@@ -228,11 +235,11 @@ function HeatmapMasalahKotaContent({ dataPromise }: HeatmapMasalahKotaProps) {
           zoomControl={false}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+            attribution="&copy; OpenStreetMap contributors &copy; CARTO"
           />
           <MapController controlRef={mapControlRef} />
-          
+
           {filteredPoints.map((point) => (
             <CircleMarker
               key={point.id}
@@ -256,7 +263,7 @@ function HeatmapMasalahKotaContent({ dataPromise }: HeatmapMasalahKotaProps) {
             </CircleMarker>
           ))}
         </MapContainer>
-        
+
         <MapControlsPanel
           onZoomIn={() => mapControlRef.current?.zoomIn()}
           onZoomOut={() => mapControlRef.current?.zoomOut()}
@@ -286,7 +293,6 @@ function HeatmapMasalahKotaContent({ dataPromise }: HeatmapMasalahKotaProps) {
   );
 }
 
-// Need to import React for useRef
 import React from "react";
 
 export default function HeatmapMasalahKota(props: HeatmapMasalahKotaProps) {

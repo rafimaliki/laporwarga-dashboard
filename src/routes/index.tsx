@@ -17,9 +17,7 @@ import {
   StatsSkeleton,
 } from "@/components/widget/widget-suspense";
 
-const StatsOverview = lazy(
-  () => import("@/components/widget/stats-overview")
-);
+const StatsOverview = lazy(() => import("@/components/widget/stats-overview"));
 const RankingInstansi = lazy(
   () => import("@/components/widget/ranking-instansi")
 );
@@ -29,16 +27,14 @@ const HeatmapMasalahKota = lazy(
 const EskalasiPenolakan = lazy(
   () => import("@/components/widget/eskalasi-penolakan")
 );
-const RecentReports = lazy(
-  () => import("@/components/widget/recent-reports")
-);
+const RecentReports = lazy(() => import("@/components/widget/recent-reports"));
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [dateRangeType, setDateRangeType] = useState<DateRangeType>("all");
+  const [dateRangeType, setDateRangeType] = useState<DateRangeType>("day");
 
   const dateRange = useMemo(() => {
     const current = getDateRange(dateRangeType, 0);
@@ -67,7 +63,10 @@ function RouteComponent() {
             }
           />
           <Suspense fallback={<StatsSkeleton />}>
-            <StatsOverview dateRangeType={dateRangeType} dateRange={dateRange} />
+            <StatsOverview
+              dateRangeType={dateRangeType}
+              dateRange={dateRange}
+            />
           </Suspense>
 
           <Suspense fallback={<TableSkeleton rows={5} />}>

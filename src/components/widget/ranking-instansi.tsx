@@ -1,4 +1,10 @@
-import { Trophy, TrendingUp, TrendingDown, Clock, AlertTriangle } from "lucide-react";
+import {
+  Trophy,
+  TrendingUp,
+  TrendingDown,
+  Clock,
+  AlertTriangle,
+} from "lucide-react";
 import { use } from "react";
 import type { RankingData, WidgetProps } from "./types";
 import { fetchRankingInstansi } from "@/api/analytics.api";
@@ -58,15 +64,36 @@ interface RankBadgeProps {
 
 function RankBadge({ rank }: RankBadgeProps) {
   const getRankStyle = (r: number) => {
-    if (r === 1) return "bg-amber-400 text-amber-900";
-    if (r === 2) return "bg-slate-300 text-slate-700";
-    if (r === 3) return "bg-orange-300 text-orange-800";
+    if (r === 1)
+      return `
+      bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600
+      text-yellow-950
+      shadow-lg shadow-yellow-500/40
+      ring-1 ring-yellow-500/50
+    `;
+
+    if (r === 2)
+      return `
+      bg-gradient-to-br from-slate-200 via-slate-300 to-slate-400
+      text-slate-900
+      shadow-md shadow-slate-400/40
+      ring-1 ring-slate-400/50
+    `;
+
+    if (r === 3)
+      return `
+      bg-gradient-to-br from-amber-400 via-amber-500 to-amber-700
+      text-amber-950
+      shadow-md shadow-amber-600/40
+      ring-1 ring-amber-600/50
+    `;
+
     return "bg-slate-100 text-slate-600";
   };
 
   return (
     <span
-      className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold ${getRankStyle(rank)}`}
+      className={`ml-1 inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold ${getRankStyle(rank)}`}
     >
       {rank}
     </span>

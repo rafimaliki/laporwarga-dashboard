@@ -81,22 +81,21 @@ export default function ReportTypeDistribution() {
 
   const chartData = data.data.map((item) => ({
     type: item.reportType,
-    Submitted: item.submitted,
-    Verified: item.verified,
-    "In Progress": item.inProgress,
-    Resolved: item.resolved,
-    Rejected: item.rejected,
-    Escalated: item.escalated,
+    Terkirim: item.submitted,
+    Terverifikasi: item.verified,
+    "Sedang Diproses": item.inProgress,
+    Dieskalasi: item.escalated,
+    Terselesaikan: item.resolved,
+    Ditolak: item.rejected,
     total: item.total,
   }));
-
   const statusColors = {
-    Submitted: "#94a3b8",
-    Verified: "#60a5fa",
-    "In Progress": "#fbbf24",
-    Resolved: "#34d399",
-    Rejected: "#f87171",
-    Escalated: "#a78bfa",
+    Terkirim: "#22c55e",
+    Terverifikasi: "#31694E",
+    "Sedang Diproses": "#f59e0b",
+    Terselesaikan: "#B2C6D5",
+    Ditolak: "#E55050",
+    Dieskalasi: "#547792",
   };
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -138,14 +137,18 @@ export default function ReportTypeDistribution() {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <PieChart className="w-5 h-5 text-orange-600" />
-          Distribusi Jenis Masalah
-        </CardTitle>
-        <p className="text-sm text-slate-500 mt-1">
-          Breakdown berdasarkan jenis dan status laporan
-        </p>
+      <CardHeader className="flex flex-row items-center gap-3">
+        <div className="h-10 w-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600">
+          <PieChart size={20} />
+        </div>
+        <div>
+          <h3 className="font-semibold text-slate-800">
+            Distribusi Jenis Masalah
+          </h3>
+          <p className="text-sm text-slate-500">
+            Breakdown berdasarkan jenis dan status laporan
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         {chartData.length > 0 ? (
@@ -170,39 +173,39 @@ export default function ReportTypeDistribution() {
                   iconType="circle"
                 />
                 <Bar
-                  dataKey="Submitted"
+                  dataKey="Terkirim"
                   stackId="a"
-                  fill={statusColors.Submitted}
+                  fill={statusColors.Terkirim}
                   radius={[0, 0, 0, 0]}
                 />
                 <Bar
-                  dataKey="Verified"
+                  dataKey="Terverifikasi"
                   stackId="a"
-                  fill={statusColors.Verified}
+                  fill={statusColors.Terverifikasi}
                   radius={[0, 0, 0, 0]}
                 />
                 <Bar
-                  dataKey="In Progress"
+                  dataKey="Sedang Diproses"
                   stackId="a"
-                  fill={statusColors["In Progress"]}
+                  fill={statusColors["Sedang Diproses"]}
                   radius={[0, 0, 0, 0]}
                 />
                 <Bar
-                  dataKey="Resolved"
+                  dataKey="Dieskalasi"
                   stackId="a"
-                  fill={statusColors.Resolved}
+                  fill={statusColors.Dieskalasi}
                   radius={[0, 0, 0, 0]}
                 />
                 <Bar
-                  dataKey="Rejected"
+                  dataKey="Terselesaikan"
                   stackId="a"
-                  fill={statusColors.Rejected}
+                  fill={statusColors.Terselesaikan}
                   radius={[0, 0, 0, 0]}
                 />
                 <Bar
-                  dataKey="Escalated"
+                  dataKey="Ditolak"
                   stackId="a"
-                  fill={statusColors.Escalated}
+                  fill={statusColors.Ditolak}
                   radius={[4, 4, 0, 0]}
                 />
               </BarChart>

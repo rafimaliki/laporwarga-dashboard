@@ -16,8 +16,8 @@ export default function Sidebar() {
 
       <nav className="mt-6 px-4 space-y-1">
         <SidebarItem icon={<LayoutGrid size={20} />} label="Dashboard" active />
-        <SidebarItem icon={<FileText size={20} />} label="Reports" />
-        <SidebarItem icon={<BarChart3 size={20} />} label="Statistics" />
+        {/* <SidebarItem icon={<FileText size={20} />} label="Reports" />
+        <SidebarItem icon={<BarChart3 size={20} />} label="Statistics" /> */}
         <SidebarItem icon={<Settings size={20} />} label="Settings" />
       </nav>
     </aside>

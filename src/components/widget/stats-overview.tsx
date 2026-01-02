@@ -117,7 +117,7 @@ export default function StatsOverview({
         iconBgColor="bg-blue-50"
       />
       <StatCard
-        label="Pending"
+        label="Menunggu Diproses"
         value={overviewData.current.pendingReports}
         previousValue={overviewData.previous?.pendingReports}
         icon={Clock}
