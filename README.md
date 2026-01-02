@@ -2,6 +2,8 @@
 
 This is a dashboard service that visualizes analytics data from the analytics service.
 
+![Dashboard Screenshot](img/screenshot.png)
+
 ## Running the Service
 
 To run the service using Docker Compose:
